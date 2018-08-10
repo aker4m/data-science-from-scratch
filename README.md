@@ -1,8 +1,8 @@
 ## Table of Contents
 
-1. Introduction
-2. A Crash Course in Python
-3. [Visualizing Data](https://github.com/joelgrus/data-science-from-scratch/blob/master/code/visualizing_data.py)
+1. 들어가기(Introduction)
+2. 파이썬 속성 강좌(A Crash Course in Python)
+3. [데이터 시각화(Visualizing Data)](https://github.com/joelgrus/data-science-from-scratch/blob/master/code/visualizing_data.py)
 4. [Linear Algebra](https://github.com/joelgrus/data-science-from-scratch/blob/master/code/linear_algebra.py)
 5. [Statistics](https://github.com/joelgrus/data-science-from-scratch/blob/master/code/statistics.py)
 6. [Probability](https://github.com/joelgrus/data-science-from-scratch/blob/master/code/probability.py)
