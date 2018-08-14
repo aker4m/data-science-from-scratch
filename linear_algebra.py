@@ -4,52 +4,85 @@ from collections import defaultdict, Counter
 from functools import partial, reduce
 
 def vector_add(v, w):
-    pass
+    return [v_i + w_i for v_i, w_i in zip(v, w)]
 
 def vector_subtract(v, w):
-    pass
+    return [v_i - w_i for v_i, w_i in zip(v, w)]
 
 def vector_sum(vectors):
-    pass
+    return reduce(vector_add, vectors)
 
 def scalar_multiply(c, v):
-    pass
+    return [c*v_i for v_i in v]
 
 def vector_mean(vectors):
-    pass
+    n = len(vectors)
+    return scalar_multiply(1/n, vector_sum(vectors))
 
 def dot(v, w):
-    pass
+    return sum(v_i * w_i for v_i, w_i in zip(v, w))
 
 def sum_of_squares(v):
-    pass
+    return dot(v, v)
 
 def magnitude(v):
-    pass
+    return math.sqrt(sum_of_squares(v))
 
 def squared_distance(v, w):
-    pass
+    return sum_of_squares(vector_subtract(v, w))
 
 def distance(v, w):
-    pass
+    return math.sqrt(squared_distance(v, w))
+
+# functions for working with matrices
 
 def shape(A):
-    pass
+    num_rows = len(A)
+    num_cols = len(A[0]) if A else 0
+    return num_rows, num_cols
 
 def get_row(A, i):
-    pass
+    return A[i]
 
 def get_column(A, j):
-    pass
+    return [A_i[j] in A_i in A]
 
 def make_matrix(num_rows, num_cols, entry_fn):
-    pass
+    return [[entry_fn(i, j) for j in range(num_cols)]
+            for i in range(num_rows)]
 
 def is_diagonal(i, j):
-    pass
+    return 1 if i==j else 0
+
+identity_matrix = make_matrix(5, 5, is_diagonal)
 
 def matrix_add(A, B):
-    pass
+    if shape(A) != shape(B):
+        raise ArithmeticError('cannot add matrices with different shapes')
+
+    num_rows, num_cols = shape(A)
+    def entry_fn(i, j):
+        return A[i][j] + B[i][j]
+
+    return make_matrix(num_rows, num_cols, entry_fn)
 
 def make_graph_dot_product_as_vector_projection(plt):
-    pass
+    v = [2, 1]
+    w = [math.sqrt(.25), math.sqrt(.75)]
+    c = dot(v, w)
+    vonw = scalar_multiply(c, w)
+    o = [0, 0]
+
+    plt.arrow(0, 0, v[0], v[1], 
+                width=0.002, head_width=.1, length_includes_head=True)
+    plt.annotate('v', v, xytext=[v[0] + 0.1, v[1]])
+    plt.arrow(0, 0, w[0], w[1], 
+                width=0.002, head_width=.1, length_includes_head=True)
+    plt.annotate('w', w, xytext=[w[0] - 0.1, w[1]])
+    plt.arrow(0, 0, vonw[0], vonw[1], length_includes_head=True)
+    plt.annotate(u'(v·w)w', vonw, xytext=[vonw[0] - 0.1, vonw[1]+0.1])
+    plt.arrow(v[0], v[1], vonw[0] - v[0], vonw[1] - v[1],
+                linestyle='dotted', length_includes_head=True)
+    plt.scatter(*zip(v, w, o), marker='.')
+    plt.axis('equal')
+    plt.show()
